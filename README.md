@@ -20,5 +20,3 @@ Others
 - Powered by ZenHub
 - CI by Travis
 - Cloud server by DigitalOcean
-
-test
