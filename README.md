@@ -20,3 +20,37 @@ Others
 - Powered by ZenHub
 - CI by Travis
 - Cloud server by DigitalOcean
+
+## API
+### Zasoby API
+* Player
+  * Nazwa
+  * Ranking
+  * Punktacja
+  * Aktywność
+  * Przynależność do sojuszu
+* Planet
+  * Nazwa
+  * Adres
+  * Temperatura
+  * Średnica
+  * Stan zabudowy
+  * Pola zniszczeń
+* Building
+  * 
+* Ship
+  * 
+* Defense
+  * 
+* Research
+  * 
+* Resources
+  * 
+* Fleet
+  * 
+* Message
+  * 
+* Galaxy
+  * 
+* Alliance
+  * 
