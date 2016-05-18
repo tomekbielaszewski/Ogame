@@ -37,13 +37,28 @@ Others
   * Stan zabudowy
   * Pola zniszczeń
 * Building
-  * 
+  * Poziom
+  * Produkcja
+  * Zużycie energi
+  * Wymagania 
+  * Czas budowy
+  * Czas wyburzania
 * Ship
-  * 
+  * Nazwa
+  * Rodzaj
+  * Punkty strukturalne
+  * Siła obrony
+  * Siła ataku
+  * Pojemność ładunkowa
+  * Szybkość
+  * Zużycie paliwa
 * Defense
   * 
 * Research
-  * 
+  * Nazwa
+  * Poziom
+  * Wymagania
+  * Czas badania
 * Resources
   * 
 * Fleet
