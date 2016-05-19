@@ -68,4 +68,58 @@ Others
 * Galaxy
   * 
 * Alliance
-  * 
+  
+### Enpoints (per view)
+
+#### Common
+* Resources on planet
+* Messages count
+* Planets owned
+
+#### Dashboard
+* Planet informations
+  * coords
+  * size
+  * destruction fields
+  * temperature
+
+#### Buildings
+* current building levels
+* current building costs
+* current building build times
+* leveling a building up
+* building preconditions
+  
+#### Laboratory
+* researches available
+* current research levels
+* current research costs
+* current research build times
+* leveling a research up
+* research preconditions
+  
+#### Shipyard
+* ships available
+* ships owned
+* ship costs
+* ship build time
+* building ships
+  
+#### Defense
+* defense available
+* defense owned
+* defense costs
+* defense build time
+* building defense
+
+#### Kapitol
+#### Alliance
+#### Fleet
+#### Teleport
+#### Galaxy
+#### Technology
+#### Statistics
+#### Highscore
+#### Merchandise
+#### Search
+#### Simulator
