@@ -112,14 +112,14 @@ Others
 * defense build time
 * building defense
 
-#### Kapitol
+#### Capitol
 #### Alliance
 #### Fleet
 #### Teleport
 #### Galaxy
 #### Technology
 #### Statistics
-#### Highscore
-#### Merchandise
+#### High score
+#### Exchange
 #### Search
 #### Simulator
