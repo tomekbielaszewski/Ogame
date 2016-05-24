@@ -53,7 +53,10 @@ Others
   * Szybkość
   * Zużycie paliwa
 * Defense
-  * 
+  * Nazwa
+  * Punkty strukturalne
+  * Siła obrony
+  * Siła ataku
 * Research
   * Nazwa
   * Poziom
@@ -64,7 +67,10 @@ Others
 * Fleet
   * 
 * Message
-  * 
+  * Data
+  * Autor
+  * Temat
+  * Treść
 * Galaxy
   * 
 * Alliance
