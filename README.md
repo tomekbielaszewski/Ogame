@@ -65,7 +65,15 @@ Others
 * Resources
   * 
 * Fleet
-  * 
+  * Nr
+  * Misja
+  * Liczba
+  * Skąd
+  * Godzina dolotu
+  * Cel
+  * Godzina powrotu
+  * Pozostały czas
+  * Rozkaz
 * Message
   * Data
   * Autor
