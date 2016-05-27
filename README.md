@@ -19,4 +19,5 @@ Methodology
 Others
 - Powered by ZenHub
 - CI by Travis
-- Cloud server by DigitalOcean
+- Cloud server by AWS
+- Chat by Discard
