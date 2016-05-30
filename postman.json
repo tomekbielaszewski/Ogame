@@ -1,0 +1,71 @@
+{
+  "id": "190cc66b-76d1-fb36-4b83-3060060be6c8",
+  "name": "OgameClone",
+  "timestamp": 1464639772244,
+  "requests": [
+    {
+      "collectionId": "190cc66b-76d1-fb36-4b83-3060060be6c8",
+      "id": "6acea417-2788-6ff7-011f-052d3e71ab68",
+      "name": "Login",
+      "description": "",
+      "url": "http://localhost:8080/login",
+      "method": "POST",
+      "headers": "",
+      "data": [
+        {
+          "key": "username",
+          "value": "grizz",
+          "type": "text"
+        },
+        {
+          "key": "password",
+          "value": "grizz",
+          "type": "text"
+        }
+      ],
+      "dataMode": "urlencoded",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    },
+    {
+      "collectionId": "190cc66b-76d1-fb36-4b83-3060060be6c8",
+      "id": "a4ddd4fc-5b14-8c2a-28ff-867284bb0bed",
+      "name": "Logout",
+      "description": "",
+      "url": "http://localhost:8080/logout",
+      "method": "GET",
+      "headers": "",
+      "data": [
+        {
+          "key": "username",
+          "value": "grizz",
+          "type": "text"
+        },
+        {
+          "key": "password",
+          "value": "grizz",
+          "type": "text"
+        }
+      ],
+      "dataMode": "urlencoded",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    },
+    {
+      "collectionId": "190cc66b-76d1-fb36-4b83-3060060be6c8",
+      "id": "c26e3277-ba06-513d-605e-47d5524560de",
+      "name": "Planet by ID",
+      "description": "",
+      "url": "http://localhost:8080/planets/14312",
+      "method": "GET",
+      "headers": "",
+      "data": [],
+      "dataMode": "params",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    }
+  ]
+}
