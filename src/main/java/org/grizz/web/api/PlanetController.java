@@ -16,7 +16,7 @@ public class PlanetController {
     @Autowired
     private PlanetService planetService;
 
-    @PreAuthorize("authenticated")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Planet getPlanet(@PathVariable String id) {
         return planetService.get(id);
