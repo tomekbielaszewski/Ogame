@@ -23,7 +23,7 @@ import java.io.IOException;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AuthenticationProvider restAuthenticationProvider;
+    private AuthenticationProvider daoAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(restAuthenticationProvider);
+        auth.authenticationProvider(daoAuthenticationProvider);
     }
 
     private void unauthorized(HttpServletResponse response) throws IOException {
