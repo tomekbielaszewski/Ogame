@@ -11,8 +11,8 @@ import java.util.Set;
 @Document(collection = "users")
 public class User {
 
-
     private String login;
     private String passwordHash;
     private Set<String> roles;
+
 }
