@@ -1,6 +1,5 @@
 package org.grizz.web.api;
 
-import org.grizz.model.Building;
 import org.grizz.model.Planet;
 import org.grizz.service.PlanetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +22,6 @@ public class PlanetController {
     @RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Planet getPlanet(@PathVariable String id) {
         return planetService.get(id);
-    }
-
-    @PreAuthorize("authenticated")
-    @RequestMapping(value = "/{id}/buildings", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Set<Building> getBuildings(@PathVariable String id) {
-        return planetService.get(id).getBuildings();
     }
 
 }

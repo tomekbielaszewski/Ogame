@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class PlanetControllerTest {
     private static String ID = "some_id";
-    private static String type = "Metal mind";
+    private static String type = "Metal mine";
     private static int level = 1;
     private Set<Building> buildings = new HashSet<>();
 

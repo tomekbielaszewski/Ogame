@@ -1,5 +1,6 @@
 package org.grizz.model;
 
+import com.google.common.collect.Sets;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +14,6 @@ import java.util.*;
 public class Planet {
 
     private String id;
-    private Set<Building> buildings = new HashSet<>();
+    private Set<Building> buildings = Sets.newHashSet();
 
 }
