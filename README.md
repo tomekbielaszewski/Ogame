@@ -2,6 +2,7 @@
 Ogame clone created for coding practice
 
 [![Build Status](https://travis-ci.org/tomekbielaszewski/Ogame.svg)](https://travis-ci.org/tomekbielaszewski/Ogame)
+<a href="https://zenhub.com"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
 Planned technologies, standards, solutions (order is irrelevant):
 - Java 8
