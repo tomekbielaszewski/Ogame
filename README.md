@@ -1,6 +1,8 @@
 # Ogame
 Ogame clone created for coding practice
 
+[![Build Status](https://travis-ci.org/tomekbielaszewski/Ogame.svg)](https://travis-ci.org/tomekbielaszewski/Ogame)
+
 Planned technologies, standards, solutions (order is irrelevant):
 - Java 8
 - Spring Boot
