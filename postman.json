@@ -1,36 +1,40 @@
 {
-  "id": "190cc66b-76d1-fb36-4b83-3060060be6c8",
+  "id": "46fe21d8-3d3a-2f68-0c71-b4bae8c103ee",
   "name": "OgameClone",
+  "description": "",
+  "order": [
+    "e3c760f2-0ac9-bb91-aafe-01760adffb31",
+    "18c7cb35-c4e6-26e5-59a0-6a3a64abac1e",
+    "0e8635dc-da19-c3c5-40ac-3c6cf6492a8d"
+  ],
+  "folders": [],
   "timestamp": 1464639772244,
+  "owner": "398950",
+  "remoteLink": "",
+  "public": false,
   "requests": [
     {
-      "collectionId": "190cc66b-76d1-fb36-4b83-3060060be6c8",
-      "id": "6acea417-2788-6ff7-011f-052d3e71ab68",
-      "name": "Login",
-      "description": "",
-      "url": "http://localhost:8080/login",
-      "method": "POST",
+      "id": "0e8635dc-da19-c3c5-40ac-3c6cf6492a8d",
       "headers": "",
-      "data": [
-        {
-          "key": "username",
-          "value": "grizz",
-          "type": "text"
-        },
-        {
-          "key": "password",
-          "value": "grizz",
-          "type": "text"
-        }
-      ],
-      "dataMode": "urlencoded",
-      "timestamp": 0,
-      "responses": [],
-      "version": 2
+      "url": "http://localhost:8080/planets/Sample planet",
+      "preRequestScript": "",
+      "pathVariables": {},
+      "method": "GET",
+      "data": [],
+      "dataMode": "params",
+      "version": 2,
+      "tests": "",
+      "currentHelper": "normal",
+      "helperAttributes": {},
+      "time": 1466013970327,
+      "name": "Planet by ID",
+      "description": "",
+      "collectionId": "46fe21d8-3d3a-2f68-0c71-b4bae8c103ee",
+      "responses": []
     },
     {
-      "collectionId": "190cc66b-76d1-fb36-4b83-3060060be6c8",
-      "id": "a4ddd4fc-5b14-8c2a-28ff-867284bb0bed",
+      "collectionId": "46fe21d8-3d3a-2f68-0c71-b4bae8c103ee",
+      "id": "18c7cb35-c4e6-26e5-59a0-6a3a64abac1e",
       "name": "Logout",
       "description": "",
       "url": "http://localhost:8080/logout",
@@ -51,21 +55,36 @@
       "dataMode": "urlencoded",
       "timestamp": 0,
       "responses": [],
-      "version": 2
+      "version": 2,
+      "preRequestScript": "",
+      "tests": ""
     },
     {
-      "collectionId": "190cc66b-76d1-fb36-4b83-3060060be6c8",
-      "id": "c26e3277-ba06-513d-605e-47d5524560de",
-      "name": "Planet by ID",
+      "collectionId": "46fe21d8-3d3a-2f68-0c71-b4bae8c103ee",
+      "id": "e3c760f2-0ac9-bb91-aafe-01760adffb31",
+      "name": "Login",
       "description": "",
-      "url": "http://localhost:8080/planets/14312",
-      "method": "GET",
+      "url": "http://localhost:8080/login",
+      "method": "POST",
       "headers": "",
-      "data": [],
-      "dataMode": "params",
+      "data": [
+        {
+          "key": "username",
+          "value": "grizz",
+          "type": "text"
+        },
+        {
+          "key": "password",
+          "value": "grizz",
+          "type": "text"
+        }
+      ],
+      "dataMode": "urlencoded",
       "timestamp": 0,
       "responses": [],
-      "version": 2
+      "version": 2,
+      "preRequestScript": "",
+      "tests": ""
     }
   ]
 }

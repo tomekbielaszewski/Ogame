@@ -1,9 +1,10 @@
-package org.grizz.web.api;
+package org.grizz.sampleData;
 
 import org.grizz.OgameCloneApplication;
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
 import org.grizz.model.repos.PlanetRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class SampleData {
     @Autowired
     PlanetRepository planetRepository;
 
-    // @Ignore
+    @Ignore
     @Test
     public void createSampleNewPlanet() {
         planetRepository.deleteAll();
