@@ -2,8 +2,8 @@ package org.grizz.model;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Builder
 public class Building {
 
