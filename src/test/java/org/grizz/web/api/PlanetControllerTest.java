@@ -51,16 +51,9 @@ public class PlanetControllerTest {
         mockMvc.perform(get("/planets/" + ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id").value(ID));
-    }
-
-    @Test
-    public void shouldReturnBuildingListWhenGivenProperID() throws Exception {
-        mockMvc.perform(get("/planets/" + ID + "/buildings"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$[0].type").value(type))
-                .andExpect(jsonPath("$[0].level").value(level));
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.buildings[0].type").value(type))
+                .andExpect(jsonPath("$.buildings[0].level").value(level));
     }
 
     private Planet dummyPlanet(String id) {
