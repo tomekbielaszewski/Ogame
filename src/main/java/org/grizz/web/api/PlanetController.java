@@ -21,4 +21,5 @@ public class PlanetController {
     public Planet getPlanet(@PathVariable String id) {
         return planetService.get(id);
     }
+
 }

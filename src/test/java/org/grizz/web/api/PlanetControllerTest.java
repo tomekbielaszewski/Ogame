@@ -1,5 +1,6 @@
 package org.grizz.web.api;
 
+import org.grizz.model.Building;
 import org.grizz.model.Planet;
 import org.grizz.service.PlanetService;
 import org.junit.Before;
@@ -15,6 +16,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -24,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class PlanetControllerTest {
     private static String ID = "some_id";
+    private static String type = "Metal mine";
+    private static int level = 1;
+    private Set<Building> buildings = new HashSet<>();
 
     private MockMvc mockMvc;
 
@@ -44,12 +51,15 @@ public class PlanetControllerTest {
         mockMvc.perform(get("/planets/" + ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id").value(ID));
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.buildings[0].type").value(type))
+                .andExpect(jsonPath("$.buildings[0].level").value(level));
     }
 
     private Planet dummyPlanet(String id) {
-        return Planet.builder().id(id).build();
+        buildings.add(Building.builder().level(level).type(type).build());
+        return Planet.builder().id(id).buildings(buildings).build();
     }
 
-
 }
+
