@@ -3,8 +3,8 @@ package org.grizz.sampleData;
 import org.grizz.OgameCloneApplication;
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
+import org.grizz.model.enummerations.BuildingType;
 import org.grizz.model.repos.PlanetRepository;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +23,16 @@ public class SampleData {
     @Autowired
     PlanetRepository planetRepository;
 
-    @Ignore
+    //@Ignore
     @Test
     public void createSampleNewPlanet() {
         planetRepository.deleteAll();
         Set<Building> buildings = new HashSet<>();
-        buildings.add(Building.builder().level(1).type("Metal mine").build());
-        buildings.add(Building.builder().level(1).type("Crystal mine").build());
-        buildings.add(Building.builder().level(1).type("Deuterium mine").build());
+        buildings.add(Building.builder().level(1).type(BuildingType.METAL_MINE).build());
+        buildings.add(Building.builder().level(1).type(BuildingType.CRYSTAL_MINE).build());
+        buildings.add(Building.builder().level(1).type(BuildingType.EXTRACTOR_DEUTERIUM).build());
 
-        planetRepository.insert(Planet.builder().id("Sample planet").buildings(buildings).build());
+        planetRepository.save(Planet.builder().id("Sample planet").buildings(buildings).build());
     }
 
 }

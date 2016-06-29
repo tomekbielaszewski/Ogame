@@ -2,6 +2,7 @@ package org.grizz.web.api;
 
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
+import org.grizz.model.enummerations.BuildingType;
 import org.grizz.service.PlanetService;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class PlanetControllerTest {
     private static String ID = "some_id";
-    private static String type = "Metal mine";
+    private static BuildingType type = BuildingType.CRYSTAL_MINE;
     private static int level = 1;
     private Set<Building> buildings = new HashSet<>();
 
@@ -52,7 +53,7 @@ public class PlanetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id").value(ID))
-                .andExpect(jsonPath("$.buildings[0].type").value(type))
+                .andExpect(jsonPath("$.buildings[0].type").value(type.name()))
                 .andExpect(jsonPath("$.buildings[0].level").value(level));
     }
 
