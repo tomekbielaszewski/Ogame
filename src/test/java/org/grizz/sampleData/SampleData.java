@@ -41,7 +41,6 @@ public class SampleData {
         buildings.add(Building.builder().level(1).type(BuildingType.EXTRACTOR_DEUTERIUM).build());
 
         planetRepository.save(Planet.builder().id("Sample planet").buildings(buildings).build());
-        planetRepository.insert(Planet.builder().id("Sample planet").buildings(buildings).build());
     }
 
     @Ignore
@@ -51,7 +50,7 @@ public class SampleData {
 
         User user = User.builder().login("test_user").passwordHash(BCrypt.hashpw("test_pass", BCrypt.gensalt())).roles(Sets.newHashSet()).build();
 
-        userRepository.insert(user);
+        userRepository.save(user);
     }
 
 }
