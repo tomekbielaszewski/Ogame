@@ -5,6 +5,7 @@ import org.grizz.OgameCloneApplication;
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
 import org.grizz.model.User;
+import org.grizz.model.enummerations.BuildingType;
 import org.grizz.model.repos.PlanetRepository;
 import org.grizz.model.repos.UserRepository;
 import org.junit.Ignore;
@@ -35,10 +36,11 @@ public class SampleData {
     public void fillPlanets() {
         planetRepository.deleteAll();
         Set<Building> buildings = new HashSet<>();
-        buildings.add(Building.builder().level(1).type("Metal mine").build());
-        buildings.add(Building.builder().level(1).type("Crystal mine").build());
-        buildings.add(Building.builder().level(1).type("Deuterium mine").build());
+        buildings.add(Building.builder().level(1).type(BuildingType.METAL_MINE).build());
+        buildings.add(Building.builder().level(1).type(BuildingType.CRYSTAL_MINE).build());
+        buildings.add(Building.builder().level(1).type(BuildingType.EXTRACTOR_DEUTERIUM).build());
 
+        planetRepository.save(Planet.builder().id("Sample planet").buildings(buildings).build());
         planetRepository.insert(Planet.builder().id("Sample planet").buildings(buildings).build());
     }
 
