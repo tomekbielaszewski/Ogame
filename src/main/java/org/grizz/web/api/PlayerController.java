@@ -21,7 +21,7 @@ public class PlayerController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public User getPlanet(@RequestBody UserPasswordChangeRequest user) {
+    public User changePassword(@RequestBody UserPasswordChangeRequest user) {
         return userService.changePassword(user.getOldPassword(), user.getNewPassword());
     }
 

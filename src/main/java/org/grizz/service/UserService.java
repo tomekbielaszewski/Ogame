@@ -3,6 +3,8 @@ package org.grizz.service;
 import com.google.common.collect.Sets;
 import org.grizz.exception.UserBadPasswordException;
 import org.grizz.model.User;
+import org.grizz.model.repos.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,9 @@ import static org.springframework.security.crypto.bcrypt.BCrypt.*;
 
 @Service
 public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+
     public User getByLogin(String login) {
         return User.builder()
                 .login(login)
@@ -40,10 +45,10 @@ public class UserService {
         User currentUser = getCurrentUser();
         if (checkpw(oldPassword, currentUser.getPasswordHash())) {
             currentUser.setPasswordHash(hashpw(newPassword, gensalt()));
+            userRepository.save(currentUser);
         } else {
             throw new UserBadPasswordException();
         }
-        //TODO Use repository to save user
         return currentUser;
     }
 }

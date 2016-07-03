@@ -82,12 +82,6 @@
             <artifactId>json-path</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.fakemongo</groupId>
-            <artifactId>fongo</artifactId>
-            <version>1.6.2</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

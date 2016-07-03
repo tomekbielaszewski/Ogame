@@ -1,6 +1,6 @@
 package org.grizz.integration.test;
 
-import org.grizz.TestContext;
+import org.grizz.OgameCloneApplication;
 import org.grizz.config.security.SecurityConfig;
 import org.grizz.service.UserService;
 import org.junit.Before;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestContext.class, SecurityConfig.class})
+@ContextConfiguration(classes = {OgameCloneApplication.class, SecurityConfig.class})
 @WebAppConfiguration
 public class SecurityIntegrationTest {
     private MockMvc mockMvc;
