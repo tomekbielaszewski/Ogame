@@ -1,5 +1,6 @@
 package org.grizz.web.api;
 
+import com.google.common.collect.Sets;
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
 import org.grizz.model.enummerations.BuildingType;
@@ -17,7 +18,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.mockito.Mockito.when;
@@ -31,7 +31,7 @@ public class PlanetControllerTest {
     private static String ID = "some_id";
     private static BuildingType type = BuildingType.CRYSTAL_MINE;
     private static int level = 1;
-    private Set<Building> buildings = new HashSet<>();
+    private Set<Building> buildings = Sets.newHashSet();
 
     private MockMvc mockMvc;
 
