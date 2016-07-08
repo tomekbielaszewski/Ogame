@@ -52,7 +52,7 @@ public class PlanetControllerTest {
         mockMvc.perform(get("/planets/" + ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.name").value(ID))
                 .andExpect(jsonPath("$.buildings[0].type").value(type.name()))
                 .andExpect(jsonPath("$.buildings[0].level").value(level));
     }

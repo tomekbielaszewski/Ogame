@@ -1,5 +1,6 @@
 package org.grizz.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.grizz.OgameCloneApplication;
 import org.grizz.config.security.SecurityConfig;
 import org.grizz.exception.UserBadPasswordException;
@@ -18,11 +19,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
-
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {OgameCloneApplication.class, SecurityConfig.class})
 public class UserServiceTest {
@@ -70,4 +70,41 @@ public class UserServiceTest {
 
         userService.changePassword(oldPassword, newPassword);
     }
+
+    @Test
+    public void shouldIncreaseNumberOfPlanetOnCurrentUser() {
+        User user = userService.increaseNumberOfPlanetsAndSave(sampleUser());
+
+        int oldPlanetNumber = sampleUser().getPlanetNumber();
+        System.out.println(user);
+        int newPlantNumber = user.getPlanetNumber();
+
+        assertTrue(newPlantNumber == oldPlanetNumber + 1);
+    }
+
+    @Test
+    public void shouldReturnTrueWhenNumberOfPlanetIsLessThenMaxPlanetNumber() {
+        User user = sampleUser();
+        assertTrue(userService.canHaveMorePlanet(user));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenNumberOfPlanetIsEqualMaxPlanetNumber() {
+        User user = sampleUser();
+        user.setMaxPlanetNumber(user.getPlanetNumber());
+        assertFalse(userService.canHaveMorePlanet(user));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenNumberOfPlanetIsBiggerThanMaxPlanetNumber() {
+        User user = sampleUser();
+        user.setMaxPlanetNumber(user.getPlanetNumber() - 1);
+        assertFalse(userService.canHaveMorePlanet(user));
+    }
+
+    private User sampleUser() {
+        return User.builder().login("login").planetNumber(4).maxPlanetNumber(8).build();
+    }
+
+
 }
