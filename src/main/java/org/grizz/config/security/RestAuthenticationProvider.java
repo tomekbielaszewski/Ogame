@@ -41,12 +41,12 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
     }
 
     private void checkUsername(User user) throws AuthenticationException {
-        if (user == null) throw new UserAuthenticationException("Bad login or password");
+        if (user == null) throw new UserAuthenticationException();
     }
 
     private void checkPassword(User user, String password) {
         if (!checkpw(password, user.getPasswordHash()))
-            throw new UserAuthenticationException("Bad login or password");
+            throw new UserAuthenticationException();
     }
 
     private List<GrantedAuthority> getAuthorities(User user) {

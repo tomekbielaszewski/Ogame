@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import org.grizz.exception.UserAuthenticationException;
 import org.grizz.model.User;
 import org.grizz.service.UserService;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
@@ -59,12 +59,12 @@ public class RestAuthenticationProviderTest {
 
     @Test
     public void shouldCreateValidTokenWhenLoginSuccessful() {
-        user.getRoles().add("USER");
+        user.getRoles().add(User.PLAYER_ROLE);
         Authentication token = authenticationProvider.authenticate(authentication);
 
         assertThat(token.getPrincipal(), equalTo(login));
         assertThat(token.getCredentials(), equalTo(plainPassword));
         assertThat(token.getAuthorities(), hasSize(1));
-        assertThat(token.getAuthorities(), Matchers.contains(new SimpleGrantedAuthority("USER")));
+        assertThat(token.getAuthorities(), contains(new SimpleGrantedAuthority(User.PLAYER_ROLE)));
     }
 }

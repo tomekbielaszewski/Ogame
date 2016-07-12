@@ -1,13 +1,17 @@
 package org.grizz.integration.test;
 
+import com.google.gson.Gson;
 import org.grizz.OgameCloneApplication;
 import org.grizz.config.security.SecurityConfig;
+import org.grizz.model.User;
 import org.grizz.service.UserService;
+import org.grizz.web.api.request.UserCreateRequest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -73,15 +77,25 @@ public class SecurityIntegrationTest {
         assertThat(currentUserLogin, equalTo("some_username"));
     }
 
-    @Ignore
     @Test
     public void shouldFailOnInvalidCSRFToken() throws Exception {
-        mockMvc.perform(post("/").with(csrf().useInvalidToken())).andExpect(status().isUnauthorized());
+        Gson gson = new Gson();
+        UserCreateRequest request = UserCreateRequest.builder()
+                .login("login")
+                .password("password")
+                .build();
+        String json = gson.toJson(request, UserCreateRequest.class);
+
+        mockMvc.perform(post("/players")
+                .with(csrf().useInvalidToken())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andExpect(status().isBadRequest());
     }
 
     @Ignore
     @Test
-    @WithMockUser(roles = {"USER"})
+    @WithMockUser(roles = {User.PLAYER_ROLE})
     public void shouldRedirectToDeniedErrorPageWhenAccessingUnauthorizedResource() throws Exception {
         mockMvc.perform(get("/somePageWithAdminRights"))
                 .andExpect(status().isForbidden())

@@ -1,6 +1,7 @@
 package org.grizz.service;
 
 import com.google.common.collect.Sets;
+import org.grizz.exception.UserAlreadyExistException;
 import org.grizz.exception.UserBadPasswordException;
 import org.grizz.model.User;
 import org.grizz.model.repos.UserRepository;
@@ -9,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 import static org.springframework.security.crypto.bcrypt.BCrypt.*;
 
 @Service
@@ -16,16 +19,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PlanetService planetService;
+
     public User getByLogin(String login) {
-        return User.builder()
-                .login(login)
-                .roles(Sets.newHashSet("PLAYER"))
-                .passwordHash(hashpw(login, gensalt()))
-                .build();
+        return userRepository.findByLogin(login);
     }
 
     public String getCurrentUserLogin() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = getAuthenticationContext();
         String currentUserLogin;
 
         if (principal instanceof UserDetails) {
@@ -46,9 +48,34 @@ public class UserService {
         if (checkpw(oldPassword, currentUser.getPasswordHash())) {
             currentUser.setPasswordHash(hashpw(newPassword, gensalt()));
             userRepository.save(currentUser);
+            return currentUser;
         } else {
             throw new UserBadPasswordException();
         }
-        return currentUser;
+    }
+
+    public User createUser(String login, String password) {
+        User alreadyExisting = getByLogin(login);
+        if (alreadyExisting == null) {
+            User user = User.builder()
+                    .login(login)
+                    .passwordHash(hashpw(password, gensalt()))
+                    .roles(player())
+                    .build();
+            User newUser = userRepository.save(user);
+            planetService.create(newUser);
+
+            return newUser;
+        } else {
+            throw new UserAlreadyExistException(login);
+        }
+    }
+
+    protected Object getAuthenticationContext() {
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    private Set<String> player() {
+        return Sets.newHashSet(User.PLAYER_ROLE);
     }
 }

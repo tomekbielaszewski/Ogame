@@ -12,13 +12,14 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class UserPasswordChangeRequest {
-    public UserPasswordChangeRequest() {}
+public class UserCreateRequest {
+    public UserCreateRequest() {}
 
-    @NotNull(message = Localization.VALIDATION_USER_PASSWORD_NOTNULL)
-    private String oldPassword;
+    @NotNull(message = Localization.VALIDATION_USER_LOGIN_NOTNULL)
+    @Size(min = 3, max = 25, message = Localization.VALIDATION_USER_LOGIN_SIZE)
+    private String login;
 
     @NotNull(message = Localization.VALIDATION_USER_PASSWORD_NOTNULL)
     @Size(min = 8, max = 255, message = Localization.VALIDATION_USER_PASSWORD_SIZE)
-    private String newPassword;
+    private String password;
 }
