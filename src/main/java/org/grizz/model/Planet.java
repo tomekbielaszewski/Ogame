@@ -15,6 +15,8 @@ public class Planet {
 
     @Id
     private String id;
+    private String name;
+    private String ownerLogin;
     private Set<Building> buildings = Sets.newHashSet();
 
 }
