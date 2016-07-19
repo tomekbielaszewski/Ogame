@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/planets")
 public class PlanetController {
@@ -20,6 +22,12 @@ public class PlanetController {
     @RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Planet getPlanet(@PathVariable String id) {
         return planetService.get(id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Planet> getPlanets() {
+        return planetService.getCurrentUserPlanets();
     }
 
 }

@@ -1,73 +1,116 @@
 package org.grizz.service;
 
-import org.grizz.OgameCloneApplication;
-import org.grizz.config.security.SecurityConfig;
+import com.google.common.collect.Sets;
+import org.grizz.exception.UserAlreadyExistException;
 import org.grizz.exception.UserBadPasswordException;
 import org.grizz.model.User;
 import org.grizz.model.repos.UserRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Set;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {OgameCloneApplication.class, SecurityConfig.class})
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
+    private final String ID = "123";
+    private final String LOGIN = "login";
+    private final String PASSWORD = "password";
+    private final String OLD_PASSWORD = "password";
+    private final String NEW_PASSWORD = "new_password";
+    private final Set<String> PLAYER_ROLES = Sets.newHashSet(User.PLAYER_ROLE);
 
+    @Mock
     private UserRepository userRepository;
 
-    @Autowired
-    @InjectMocks
-    private UserService userService;
+    @Mock
+    private PlanetService planetService;
 
-    @Before
-    public void setUp() {
-        userRepository = Mockito.mock(UserRepository.class);
-        MockitoAnnotations.initMocks(this);
-    }
+    @Mock
+    private UserDetails authenticationContext;
+
+    @InjectMocks
+    private UserServiceWithMockedAuthenticationContext userService;
 
     @Test
-    @WithMockUser(username = "user")
     public void shouldReturnProperUserLogin() {
-        String expectedLogin = "user";
+        when(authenticationContext.getUsername()).thenReturn(LOGIN);
 
         String currentUserLogin = userService.getCurrentUserLogin();
 
-        assertThat(currentUserLogin, equalTo(expectedLogin));
+        assertThat(currentUserLogin, equalTo(LOGIN));
     }
 
     @Test
-    @WithMockUser(username = "user", password = "user")
     public void shouldChangingPasswordPossibleWhenGivenProperOldPassword() {
-        String oldPassword = "user";
-        String newPassword = "newpassword";
+        when(authenticationContext.getUsername()).thenReturn(LOGIN);
+        when(userRepository.findByLogin(LOGIN)).thenReturn(dummyPlayer());
 
-        User user = userService.changePassword(oldPassword, newPassword);
+        User user = userService.changePassword(OLD_PASSWORD, NEW_PASSWORD);
 
-        boolean passwordChanged = BCrypt.checkpw(newPassword, user.getPasswordHash());
+        boolean passwordChanged = BCrypt.checkpw(NEW_PASSWORD, user.getPasswordHash());
         assertTrue(passwordChanged);
         verify(userRepository).save(user);
     }
 
-    @Test(expected = UserBadPasswordException.class)
-    @WithMockUser(username = "user", password = "user")
+    @Test
     public void shouldThrowExceptionWhenGivenImproperOldPassword() {
-        String oldPassword = "bad_password";
-        String newPassword = "newpassword";
+        when(authenticationContext.getUsername()).thenReturn(LOGIN);
+        when(userRepository.findByLogin(LOGIN)).thenReturn(dummyPlayer());
 
-        userService.changePassword(oldPassword, newPassword);
+        try {
+            userService.changePassword(OLD_PASSWORD + "bad_pass", NEW_PASSWORD);
+            fail("UserBadPasswordException was not thrown");
+        } catch (UserBadPasswordException e) {
+
+        }
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    public void shouldCreateNewUserWithItsOwnPlanet() {
+        when(userRepository.findByLogin(LOGIN)).thenReturn(null);
+        when(userRepository.save(any(User.class))).thenReturn(dummyPlayer());
+
+        User user = userService.createUser(LOGIN, PASSWORD);
+
+        boolean passwordHashed = BCrypt.checkpw(PASSWORD, user.getPasswordHash());
+        assertTrue(passwordHashed);
+        verify(userRepository).save(any(User.class));
+        verify(planetService).create(user);
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenUserAlreadyExist() {
+        when(userRepository.findByLogin(LOGIN)).thenReturn(dummyPlayer());
+
+        try {
+            userService.createUser(LOGIN, PASSWORD);
+            fail("UserAlreadyExistException was not thrown");
+        } catch (UserAlreadyExistException e) {
+            assertThat(e.getLogin(), equalTo(LOGIN));
+        }
+
+        verify(userRepository, never()).save(any(User.class));
+        verify(planetService, never()).create(any());
+    }
+
+    private User dummyPlayer() {
+        return User.builder()
+                .roles(Sets.newHashSet(PLAYER_ROLES))
+                .id(ID)
+                .login(LOGIN)
+                .passwordHash(BCrypt.hashpw(PASSWORD, BCrypt.gensalt()))
+                .build();
     }
 }
