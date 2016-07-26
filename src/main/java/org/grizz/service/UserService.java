@@ -8,16 +8,18 @@ import org.grizz.model.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-
-import static org.springframework.security.crypto.bcrypt.BCrypt.*;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private PlanetService planetService;
@@ -45,8 +47,8 @@ public class UserService {
 
     public User changePassword(String oldPassword, String newPassword) {
         User currentUser = getCurrentUser();
-        if (checkpw(oldPassword, currentUser.getPasswordHash())) {
-            currentUser.setPasswordHash(hashpw(newPassword, gensalt()));
+        if (passwordEncoder.matches(oldPassword, currentUser.getPasswordHash())) {
+            currentUser.setPasswordHash(passwordEncoder.encode(newPassword));
             userRepository.save(currentUser);
             return currentUser;
         } else {
@@ -59,7 +61,7 @@ public class UserService {
         if (alreadyExisting == null) {
             User user = User.builder()
                     .login(login)
-                    .passwordHash(hashpw(password, gensalt()))
+                    .passwordHash(passwordEncoder.encode(password))
                     .roles(player())
                     .build();
             User newUser = userRepository.save(user);
