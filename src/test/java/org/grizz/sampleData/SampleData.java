@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -30,6 +30,9 @@ public class SampleData {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Ignore
     @Test
@@ -48,7 +51,7 @@ public class SampleData {
     public void fillUsers() {
         userRepository.deleteAll();
 
-        User user = User.builder().login("test_user").passwordHash(BCrypt.hashpw("test_pass", BCrypt.gensalt())).roles(Sets.newHashSet()).build();
+        User user = User.builder().login("test_user").passwordHash(passwordEncoder.encode("test_pass")).roles(Sets.newHashSet()).build();
 
         userRepository.save(user);
     }

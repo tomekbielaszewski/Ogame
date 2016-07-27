@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
@@ -39,6 +40,9 @@ public class UserServiceTest {
     @Mock
     private UserDetails authenticationContext;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UserServiceWithMockedAuthenticationContext userService;
 
@@ -55,6 +59,8 @@ public class UserServiceTest {
     public void shouldChangingPasswordPossibleWhenGivenProperOldPassword() {
         when(authenticationContext.getUsername()).thenReturn(LOGIN);
         when(userRepository.findByLogin(LOGIN)).thenReturn(dummyPlayer());
+        when(passwordEncoder.matches(eq(OLD_PASSWORD), any())).thenReturn(true);
+        when(passwordEncoder.encode(eq(NEW_PASSWORD))).thenReturn(BCrypt.hashpw(NEW_PASSWORD, BCrypt.gensalt()));
 
         User user = userService.changePassword(OLD_PASSWORD, NEW_PASSWORD);
 
@@ -67,6 +73,7 @@ public class UserServiceTest {
     public void shouldThrowExceptionWhenGivenImproperOldPassword() {
         when(authenticationContext.getUsername()).thenReturn(LOGIN);
         when(userRepository.findByLogin(LOGIN)).thenReturn(dummyPlayer());
+        when(passwordEncoder.matches(eq(OLD_PASSWORD), any())).thenReturn(false);
 
         try {
             userService.changePassword(OLD_PASSWORD + "bad_pass", NEW_PASSWORD);
@@ -88,6 +95,7 @@ public class UserServiceTest {
         assertTrue(passwordHashed);
         verify(userRepository).save(any(User.class));
         verify(planetService).create(user);
+        verify(passwordEncoder).encode(PASSWORD);
     }
 
     @Test
