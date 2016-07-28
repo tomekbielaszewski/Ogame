@@ -1,6 +1,0 @@
-{
-  "_class" : "org.grizz.model.User",
-  "login" : "test_user",
-  "passwordHash" : "$2a$10$.ewhODmJsLY6b3hntVLilujdm3mG3vvRKvF1OEx4HWn5/6Bi7fe2C",
-  "roles" : ["PLAYER"]
-}
