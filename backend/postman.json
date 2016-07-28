@@ -1,0 +1,136 @@
+{
+  "id": "38d8b3a8-73ae-4c4d-0f3c-0aef16eefcf6",
+  "name": "OgameClone",
+  "description": "",
+  "order": [
+    "56902f0c-aae4-c5d1-fcfb-694d22013131",
+    "0baefb0a-807a-5c5f-2978-2079e051cbf0",
+    "a6f9bcf8-666d-3ff2-56b2-66e2e85a0f40",
+    "9cd1b769-f2d4-1613-d286-adb256fc9b2d",
+    "0c4f8f46-15fd-43c0-0c8a-464ca2f06685",
+    "43b11014-b547-08ca-430c-ba1cb30a7cba"
+  ],
+  "folders": [],
+  "timestamp": 1464639772244,
+  "owner": "398950",
+  "remoteLink": "",
+  "public": false,
+  "requests": [
+    {
+      "collectionId": "38d8b3a8-73ae-4c4d-0f3c-0aef16eefcf6",
+      "id": "0baefb0a-807a-5c5f-2978-2079e051cbf0",
+      "name": "Logout",
+      "description": "",
+      "url": "http://localhost:8080/logout",
+      "method": "GET",
+      "headers": "",
+      "data": [
+        {
+          "key": "username",
+          "value": "grizz",
+          "type": "text"
+        },
+        {
+          "key": "password",
+          "value": "grizz",
+          "type": "text"
+        }
+      ],
+      "dataMode": "urlencoded",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    },
+    {
+      "collectionId": "38d8b3a8-73ae-4c4d-0f3c-0aef16eefcf6",
+      "id": "0c4f8f46-15fd-43c0-0c8a-464ca2f06685",
+      "name": "User/CreateNewUser",
+      "description": "",
+      "url": "http://localhost:8080/players/",
+      "method": "POST",
+      "headers": "Content-Type: application/json;charset=UTF-8\n",
+      "data": "{\n\"login\": \"123\",\n\"password\": \"12345678\"\n}",
+      "dataMode": "raw",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1468353355787
+    },
+    {
+      "collectionId": "38d8b3a8-73ae-4c4d-0f3c-0aef16eefcf6",
+      "id": "43b11014-b547-08ca-430c-ba1cb30a7cba",
+      "name": "Planet/GetCurrentUserPlanets",
+      "description": "",
+      "url": "http://localhost:8080/planets/",
+      "method": "GET",
+      "headers": "",
+      "data": [
+        {
+          "key": "username",
+          "value": "123",
+          "type": "text"
+        },
+        {
+          "key": "password",
+          "value": "12345678",
+          "type": "text"
+        }
+      ],
+      "dataMode": "urlencoded",
+      "timestamp": 0,
+      "responses": [],
+      "version": 2
+    },
+    {
+      "collectionId": "38d8b3a8-73ae-4c4d-0f3c-0aef16eefcf6",
+      "id": "56902f0c-aae4-c5d1-fcfb-694d22013131",
+      "name": "Login",
+      "description": "",
+      "url": "http://localhost:8080/login",
+      "method": "POST",
+      "headers": "",
+      "data": [
+        {
+          "key": "username",
+          "value": "123",
+          "type": "text"
+        },
+        {
+          "key": "password",
+          "value": "12345678",
+          "type": "text"
+        }
+      ],
+      "dataMode": "urlencoded",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1468361335771
+    },
+    {
+      "collectionId": "38d8b3a8-73ae-4c4d-0f3c-0aef16eefcf6",
+      "id": "9cd1b769-f2d4-1613-d286-adb256fc9b2d",
+      "name": "User/ChangePassword",
+      "description": "",
+      "url": "http://localhost:8080/players/",
+      "method": "PUT",
+      "headers": "Content-Type: application/json;charset=UTF-8\n",
+      "data": "{\n\"oldPassword\": \"12345678\",\n\"newPassword\": \"12345678\"\n}",
+      "dataMode": "raw",
+      "timestamp": 0,
+      "version": 2,
+      "time": 1468353380347
+    },
+    {
+      "collectionId": "38d8b3a8-73ae-4c4d-0f3c-0aef16eefcf6",
+      "id": "a6f9bcf8-666d-3ff2-56b2-66e2e85a0f40",
+      "name": "Planet/ByID",
+      "description": "",
+      "url": "http://localhost:8080/planets/Sample planet",
+      "method": "GET",
+      "headers": "",
+      "data": [],
+      "dataMode": "params",
+      "responses": [],
+      "version": 2
+    }
+  ]
+}
