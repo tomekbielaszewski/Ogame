@@ -1,5 +1,18 @@
-var gulp = require('gulp');
+'use strict';
 
-gulp.task('default', function() {
-  // place code for your default task here
-});
+var gulp = require('gulp-help')(require('gulp')),
+    runSequence = require('run-sequence'),
+    taskOptions = {
+        options: {
+            'apiBaseUrl=': 'API base url'
+        }
+    };
+
+
+require('require-dir')('gulp');
+
+gulp.task('default', defaultTask, taskOptions);
+
+function defaultTask(callback) {
+    //TODO
+}

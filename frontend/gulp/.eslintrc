@@ -1,0 +1,16 @@
+{
+  "env": {
+    "amd": true,
+    "jasmine": true,
+    "phantomjs": true
+  },
+  "rules": {
+    "global-strict": [2, "always"],
+    "strict": 0,
+    "no-console": 0,
+    "no-debugger": 1
+  },
+  "globals": {
+    "console": true
+  }
+}
