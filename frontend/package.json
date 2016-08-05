@@ -6,8 +6,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "del": "^2.2.1",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-connect": "^5.0.0",
     "gulp-help": "^1.6.1",
+    "gulp-inject": "^4.1.0",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-sass": "^2.3.2",
+    "main-bower-files": "^2.13.1",
     "require": "^2.4.20",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2"

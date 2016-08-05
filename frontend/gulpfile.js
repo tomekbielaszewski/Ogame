@@ -14,5 +14,8 @@ require('require-dir')('gulp');
 gulp.task('default', defaultTask, taskOptions);
 
 function defaultTask(callback) {
-    //TODO
+    runSequence(
+        'tmp',
+        callback
+    );
 }
