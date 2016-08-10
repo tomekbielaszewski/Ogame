@@ -75,6 +75,9 @@ function copyJsApp() {
         base: 'src/'
     })
         .pipe(ngAnnotate())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(gulp.dest('.tmp'));
 }
 

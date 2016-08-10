@@ -16,6 +16,8 @@ gulp.task('default', defaultTask, taskOptions);
 function defaultTask(callback) {
     runSequence(
         'tmp',
+        'lint',
+        'connect',
         callback
     );
 }

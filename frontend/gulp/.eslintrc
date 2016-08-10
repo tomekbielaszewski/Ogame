@@ -4,11 +4,12 @@
     "jasmine": true,
     "phantomjs": true
   },
+  "plugins": [],
   "rules": {
-    "global-strict": [2, "always"],
-    "strict": 0,
     "no-console": 0,
-    "no-debugger": 1
+    "no-debugger": 1,
+
+    "angular/log": 0
   },
   "globals": {
     "console": true
