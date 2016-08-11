@@ -18,6 +18,7 @@ function defaultTask(callback) {
         'tmp',
         'lint',
         'connect',
+        'watch',
         'test:unit:watch',
         callback
     );
