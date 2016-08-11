@@ -4,7 +4,7 @@ var gulp = require('gulp-help')(require('gulp')),
     runSequence = require('run-sequence'),
     taskOptions = {
         options: {
-            'apiBaseUrl=': 'API base url'
+            'api=http://example.com': 'API url'
         }
     };
 
@@ -18,6 +18,7 @@ function defaultTask(callback) {
         'tmp',
         'lint',
         'connect',
+        'test:unit:watch',
         callback
     );
 }

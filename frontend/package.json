@@ -18,12 +18,18 @@
     "gulp-inject": "^4.1.0",
     "gulp-ng-annotate": "^2.0.0",
     "gulp-sass": "^2.3.2",
+    "karma": "^1.1.2",
     "main-bower-files": "^2.13.1",
     "require": "^2.4.20",
     "require-dir": "^0.3.0",
-    "run-sequence": "^1.2.2"
+    "run-sequence": "^1.2.2",
+    "yargs": "^4.8.1"
   },
   "devDependencies": {
-    "yargs": "^4.8.1"
+    "jasmine-core": "^2.4.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-junit-reporter": "^1.1.0",
+    "karma-nested-reporter": "^0.1.4",
+    "karma-phantomjs-launcher": "^1.0.1"
   }
 }
