@@ -50,16 +50,14 @@ public class SecurityIntegrationTest {
 
     @Test
     public void shouldReturnStatus401WhenNotLogin() throws Exception {
-        String ID = "1";
-        mockMvc.perform(get("/planets/" + ID))
+        mockMvc.perform(get("/planets/"))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     @WithMockUser
     public void shouldReturnStatus200WhenAuthorized() throws Exception {
-        String ID = "1";
-        mockMvc.perform(get("/planets/" + ID))
+        mockMvc.perform(get("/planets/"))
                 .andExpect(status().isOk());
     }
 
