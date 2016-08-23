@@ -2,6 +2,7 @@ package org.grizz.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.grizz.exception.PlanetNotFoundException;
 import org.grizz.model.Planet;
 import org.grizz.model.User;
 import org.grizz.model.enummerations.BuildingType;
@@ -38,7 +39,10 @@ public class PlanetServiceTest {
 
     @Test
     public void shouldReturnPlanetWhenGettingById() {
+        when(planetRepository.findById(ID)).thenReturn(dummyPlanet());
+
         planetService.get(ID);
+
         verify(planetRepository).findById(ID);
     }
 
@@ -74,6 +78,12 @@ public class PlanetServiceTest {
         assertThat(planets, hasSize(1));
         assertThat(planets.get(0).getOwner(), equalTo(OWNER));
         verify(planetRepository).findByOwner(OWNER);
+    }
+
+    @Test(expected = PlanetNotFoundException.class)
+    public void shouldThrowExceptionWhenPlanetNotFound() {
+        when(planetRepository.findById(ID)).thenReturn(null);
+        planetService.get(ID);
     }
 
     private Planet dummyPlanet() {

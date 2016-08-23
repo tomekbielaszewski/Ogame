@@ -1,6 +1,8 @@
 package org.grizz.web.api;
 
 import com.google.common.collect.Sets;
+import org.grizz.exception.PlanetNotFoundException;
+import org.grizz.i18n.Localization;
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
 import org.grizz.model.enummerations.BuildingType;
@@ -29,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class PlanetControllerTest {
     private static String ID = "some_id";
+    private static String NOT_EXISTING_ID = "another_id";
     private static BuildingType type = BuildingType.CRYSTAL_MINE;
     private static int level = 1;
     private Set<Building> buildings = Sets.newHashSet();
@@ -45,6 +48,7 @@ public class PlanetControllerTest {
     public void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         when(planetService.get(ID)).thenReturn(dummyPlanet(ID));
+        when(planetService.get(NOT_EXISTING_ID)).thenThrow(new PlanetNotFoundException(NOT_EXISTING_ID));
     }
 
     @Test
@@ -55,6 +59,15 @@ public class PlanetControllerTest {
                 .andExpect(jsonPath("$.id").value(ID))
                 .andExpect(jsonPath("$.buildings[0].type").value(type.name()))
                 .andExpect(jsonPath("$.buildings[0].level").value(level));
+    }
+
+    @Test
+    public void shouldReturnStatus404WithProperMessageWhenGivenNotExistingID() throws Exception {
+        mockMvc.perform(get("/planets/" + NOT_EXISTING_ID))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.message").value(Localization.EXCEPTION_PLANET_NOT_FOUND))
+                .andExpect(jsonPath("$.cause").value(NOT_EXISTING_ID));
     }
 
     private Planet dummyPlanet(String id) {

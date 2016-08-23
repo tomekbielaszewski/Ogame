@@ -5,6 +5,7 @@ public class Localization {
     public static final String EXCEPTION_USER_ALREADY_EXIST = "exception.user.already.exist";
     public static final String EXCEPTION_BAD_PASSWORD = "exception.user.bad.password";
     public static final String EXCEPTION_AUTHENTICATION_FAILED = "exception.user.authentication.failed";
+    public static final String EXCEPTION_PLANET_NOT_FOUND = "exception.planet.not.found";
 
     public static final String VALIDATION_USER_LOGIN_NOTNULL = "validation.user.login.notnull";
     public static final String VALIDATION_USER_LOGIN_SIZE = "validation.user.login.size";

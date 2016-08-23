@@ -1,6 +1,7 @@
 package org.grizz.service;
 
 import com.google.common.collect.Lists;
+import org.grizz.exception.PlanetNotFoundException;
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
 import org.grizz.model.User;
@@ -23,7 +24,11 @@ public class PlanetService {
     private UserService userService;
 
     public Planet get(String id) {
-        return planetRepository.findById(id);
+        Planet planet = planetRepository.findById(id);
+        if(planet == null) {
+            throw new PlanetNotFoundException(id);
+        }
+        return planet;
     }
 
     public Planet create(User owner) {
