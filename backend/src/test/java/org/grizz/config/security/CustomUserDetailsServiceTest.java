@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.HashSet;
 
@@ -39,7 +40,6 @@ public class CustomUserDetailsServiceTest {
         verify(userService).getByLogin(eq(LOGIN));
     }
 
-
     @Test
     public void properlyCreatesListOfAuthorities() {
         String auth1 = "AUTH_1";
@@ -53,5 +53,12 @@ public class CustomUserDetailsServiceTest {
 
         assertThat(userDetails.getAuthorities(), containsInAnyOrder(auth1AsSGA, auth2AsSGA));
         verify(userService).getByLogin(eq(LOGIN));
+    }
+
+    @Test(expected = UsernameNotFoundException.class)
+    public void throwsExceptionWhenUserNotExist() {
+        when(userService.getByLogin(LOGIN)).thenReturn(null);
+
+        userDetailsService.loadUserByUsername(LOGIN);
     }
 }
