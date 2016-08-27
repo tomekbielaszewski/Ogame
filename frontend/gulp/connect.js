@@ -1,7 +1,7 @@
 'use strict';
 
 const gulp = require('gulp-help')(require('gulp')),
-    browserSync = require('browser-sync').create('7AD server');
+    browserSync = require('browser-sync').create('Ogame server');
 
 gulp.task('connect', connectTask);
 gulp.task('connect:stop', connectStopTask);
