@@ -2,9 +2,8 @@
     'use strict';
 
     angular
-        .module('ogame', [
+        .module('ogame.homepage', [
             'ui.router',
-
-            'ogame.homepage'
+            'ogame.homepage.login'
         ]);
 })(angular);
