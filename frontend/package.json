@@ -32,5 +32,8 @@
     "karma-junit-reporter": "^1.1.0",
     "karma-nested-reporter": "^0.1.4",
     "karma-phantomjs-launcher": "^1.0.1"
+  },
+  "scripts": {
+    "start": "npm install && bower install && gulp"
   }
 }
