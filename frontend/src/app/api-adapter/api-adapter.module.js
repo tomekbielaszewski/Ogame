@@ -4,6 +4,6 @@
     angular
         .module('ogame.apiAdapter', [
             'ui.router',
-            'ogame.user'
+            'ngLodash'
         ]);
 })(angular);

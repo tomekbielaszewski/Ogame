@@ -5,7 +5,7 @@
         .module('ogame')
         .config(ogameConfig);
 
-    function ogameConfig($stateProvider, $windowProvider, $locationProvider) {
+    function ogameConfig($stateProvider) {
         $stateProvider
             .state('otherwise', {
                 url: '*path',

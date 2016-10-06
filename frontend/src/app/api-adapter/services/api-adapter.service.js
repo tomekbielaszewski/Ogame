@@ -5,24 +5,18 @@
         .module('ogame.apiAdapter')
         .service('APIAdapter', APIAdapter);
 
-    function APIAdapter($http, ResponseHandler, User, $state) {
+    function APIAdapter($http, ResponseHandler, lodash) {
         var $this = this,
             baseUrl = '{% apiBaseUrl %}';
 
-        $this.getBaseUrl = getBaseUrl;
         $this.sendGETRequest = sendGETRequest;
         $this.sendPUTRequest = sendPUTRequest;
         $this.sendPOSTRequest = sendPOSTRequest;
         $this.sendDELETERequest = sendDELETERequest;
 
-        function getBaseUrl() {
-            return baseUrl;
-        }
-
         function sendGETRequest(resourceName, params) {
             var url = getGETRequestUrl(resourceName, params),
-                config = getConfigObject(),
-                response = $http.get(url, config);
+                response = $http.get(url);
 
             return ResponseHandler
                 .handleResponse(response);
@@ -30,8 +24,7 @@
 
         function sendPUTRequest(resourceName, params) {
             var url = getRequestUrl(resourceName),
-                config = getConfigObject(),
-                response = $http.put(url, params, config);
+                response = $http.put(url, params);
 
             return ResponseHandler
                 .handleResponse(response);
@@ -39,8 +32,7 @@
 
         function sendPOSTRequest(resourceName, params) {
             var url = getRequestUrl(resourceName),
-                config = getConfigObject(),
-                response = $http.post(url, params, config);
+                response = $http.post(url, params);
 
             return ResponseHandler
                 .handleResponse(response);
@@ -48,8 +40,7 @@
 
         function sendDELETERequest(resourceName) {
             var url = getRequestUrl(resourceName),
-                config = getConfigObject(),
-                response = $http.delete(url, config);
+                response = $http.delete(url);
 
             return ResponseHandler
                 .handleResponse(response);
@@ -61,7 +52,7 @@
             var url = getRequestUrl(resourceName);
 
             if (params) {
-                url += '?' + serialize(params);
+                url += '?' + joinParams(params);
             }
 
             return url;
@@ -71,45 +62,19 @@
             return baseUrl + resourceName;
         }
 
-        function getConfigObject() {
-            var config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            };
+        function joinParams(params) {
+            var serializedParamsTable = lodash.map(params, processParam);
 
-            setAuthorizationConfig(config.headers);
-
-            return config;
-        }
-
-        function setAuthorizationConfig(headers) {
-            var isRequestFromPublicState = $state.includes('vendors.*');
-
-            if (!isRequestFromPublicState && User.isLogged()) {
-                headers.Authorization = 'Bearer ' + User.getToken();
-            }
-        }
-
-        function serialize(params) {
-            var serializedParamsTable = [],
-                paramName;
-
-            for (paramName in params) {
-                if (params.hasOwnProperty(paramName)) {
-                    serializedParamsTable.push(processParam(params, paramName));
-                }
-            }
+            console.log(serializedParamsTable);
 
             return serializedParamsTable.join('&');
         }
 
-        function processParam(params, paramName) {
-            var paramValue = params[paramName],
-                processedParam;
+        function processParam(paramValue, paramName) {
+            var processedParam;
 
             if (angular.isObject(paramValue)) {
-                processedParam = encodeURIComponent(paramName) + '={' + serialize(paramValue) + '}';
+                processedParam = encodeURIComponent(paramName) + '={' + joinParams(paramValue) + '}';
             } else {
                 processedParam = encodeURIComponent(paramName) + '=' + encodeURIComponent(paramValue);
             }
