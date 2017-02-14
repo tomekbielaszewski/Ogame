@@ -1,8 +1,7 @@
 (function (angular) {
     'use strict';
 
-    angular
-        .module('ogame.apiAdapter')
+    angular.module('ogame.apiAdapter')
         .service('ResponseHandler', ResponseHandler);
 
     function ResponseHandler($q, $state, User) {

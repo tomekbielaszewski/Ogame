@@ -1,4 +1,4 @@
-describe('APIAdapter Service\n', function () {
+describe('APIAdapter Service', function () {
     'use strict';
 
     var APIAdapterService;
@@ -9,7 +9,7 @@ describe('APIAdapter Service\n', function () {
         APIAdapterService = $injector.get('APIAdapter');
     }));
 
-    describe('function sendGETRequest\n', function () {
+    describe('function sendGETRequest', function () {
        it('should send get request to api', function () {
            APIAdapterService.sendGETRequest('method');
        });

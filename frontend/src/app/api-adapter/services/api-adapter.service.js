@@ -65,7 +65,7 @@
         function joinParams(params) {
             var serializedParamsTable = lodash.map(params, processParam);
 
-            console.log(serializedParamsTable);
+            // console.log(serializedParamsTable);
 
             return serializedParamsTable.join('&');
         }

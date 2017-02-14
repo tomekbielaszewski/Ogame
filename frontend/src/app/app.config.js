@@ -10,7 +10,7 @@
             .state('otherwise', {
                 url: '*path',
                 onEnter: onEnter
-        });
+            });
 
         function onEnter($state) {
             $state.go('homepage');
