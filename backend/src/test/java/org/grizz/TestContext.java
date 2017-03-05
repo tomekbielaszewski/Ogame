@@ -1,19 +1,10 @@
 package org.grizz;
 
-import com.github.fakemongo.Fongo;
-import com.mongodb.Mongo;
+import org.grizz.config.security.SecurityConfig;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-public class TestContext extends AbstractMongoConfiguration {
-    @Override
-    protected String getDatabaseName() {
-        return "fongo-ogame-test-db";
-    }
-
-    @Override
-    public Mongo mongo() throws Exception {
-        return new Fongo(getDatabaseName()).getMongo();
-    }
+@Import({FongoContext.class, OgameCloneApplication.class, SecurityConfig.class})
+public class TestContext {
 }

@@ -13,10 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -27,8 +24,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringApplicationConfiguration(classes = MockServletContext.class)
-@WebAppConfiguration
 public class PlanetControllerTest {
     private static String ID = "some_id";
     private static String NOT_EXISTING_ID = "another_id";
@@ -47,12 +42,11 @@ public class PlanetControllerTest {
     @Before
     public void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        when(planetService.get(ID)).thenReturn(dummyPlanet(ID));
-        when(planetService.get(NOT_EXISTING_ID)).thenThrow(new PlanetNotFoundException(NOT_EXISTING_ID));
     }
 
     @Test
     public void shouldReturnPlanetWhenGivenProperID() throws Exception {
+        when(planetService.get(ID)).thenReturn(dummyPlanet(ID));
         mockMvc.perform(get("/planets/" + ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -63,6 +57,7 @@ public class PlanetControllerTest {
 
     @Test
     public void shouldReturnStatus404WithProperMessageWhenGivenNotExistingID() throws Exception {
+        when(planetService.get(NOT_EXISTING_ID)).thenThrow(new PlanetNotFoundException(NOT_EXISTING_ID));
         mockMvc.perform(get("/planets/" + NOT_EXISTING_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))

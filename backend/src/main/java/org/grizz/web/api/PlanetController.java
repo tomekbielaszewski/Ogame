@@ -34,9 +34,6 @@ public class PlanetController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(PlanetNotFoundException.class)
     public ExceptionResponse handlePlanetNotFound(PlanetNotFoundException e) {
-        return ExceptionResponse.builder()
-                .message(e.getMessage())
-                .cause(e.getId())
-                .build();
+        return ExceptionResponse.of(e.getMessage(), e.getId());
     }
 }

@@ -1,8 +1,7 @@
 package org.grizz.integration.test;
 
 import com.google.gson.Gson;
-import org.grizz.OgameCloneApplication;
-import org.grizz.config.security.SecurityConfig;
+import org.grizz.TestContext;
 import org.grizz.model.User;
 import org.grizz.service.UserService;
 import org.grizz.web.api.request.UserCreateRequest;
@@ -23,13 +22,14 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {OgameCloneApplication.class, SecurityConfig.class})
+@ContextConfiguration(classes = {TestContext.class})
 @WebAppConfiguration
 public class SecurityIntegrationTest {
     private MockMvc mockMvc;
@@ -89,7 +89,7 @@ public class SecurityIntegrationTest {
                 .with(csrf().useInvalidToken())
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(json))
-                .andExpect(status().isBadRequest());
+                .andExpect(unauthenticated());
     }
 
     @Ignore

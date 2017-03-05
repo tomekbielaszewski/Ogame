@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
@@ -28,6 +29,13 @@ public class PlayerController {
 
     @Autowired
     private UserService userService;
+
+    @JsonView(View.Summary.class)
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/current", method = GET)
+    public User currentUser() {
+        return userService.getCurrentUser();
+    }
 
     @JsonView(View.Summary.class)
     @RequestMapping(method = POST)
@@ -45,27 +53,21 @@ public class PlayerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserAlreadyExistException.class)
     public ExceptionResponse handleUserAlreadyExist(UserAlreadyExistException e) {
-        return ExceptionResponse.builder()
-                .message(e.getMessage())
-                .cause(e.getLogin())
-                .build();
+        return ExceptionResponse.of(e.getMessage(), e.getLogin());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserBadPasswordException.class)
     public ExceptionResponse handleBadPassword(UserBadPasswordException e) {
-        return ExceptionResponse.builder()
-                .message(e.getMessage())
-                .build();
+        return ExceptionResponse.of(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ExceptionResponse handleBadPassword(MethodArgumentNotValidException e) {
         ValidationException validationException = new ValidationException(e);
-        return ExceptionResponse.builder()
-                .message(validationException.getMessage())
-                .cause(validationException.getAllErrors())
-                .build();
+        return ExceptionResponse.of(
+                validationException.getMessage(),
+                validationException.getAllErrors());
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,13 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/denied")
                 .and()
                 .formLogin()
-                .successHandler((rq, rs, auth) -> log.info(auth.getName() + " has logged in..."))
-                .failureHandler((req, res, ex) -> unauthorized(res))
+                .successHandler((req, res, auth) -> loggedIn(res, auth))
+                .failureHandler((req, res, auth) -> unauthorized(res))
                 .and()
                 .logout()
-                .addLogoutHandler((rq, rs, auth) -> {
-                    if (auth != null) log.info(auth.getName() + " has logged out...");
-                })
+                .addLogoutHandler((rq, rs, auth) -> loggedOut(auth))
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/logout/success")
                 .deleteCookies("JSESSIONID");
@@ -75,6 +74,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
+    }
+
+    private void loggedIn(HttpServletResponse response, Authentication auth) throws IOException {
+        log.info(auth.getName() + " has logged in...");
+        response.getOutputStream().print(auth.getName());
+    }
+
+    private void loggedOut(Authentication auth) {
+        if (auth != null) log.info(auth.getName() + " has logged out...");
     }
 
     private void unauthorized(HttpServletResponse response) throws IOException {

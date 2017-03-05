@@ -15,11 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -28,13 +24,10 @@ import java.util.Set;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringApplicationConfiguration(classes = MockServletContext.class)
-@WebAppConfiguration
 public class PlayerControllerTest {
     private final String ID = "123";
     private final String LOGIN = "login";
@@ -58,13 +51,25 @@ public class PlayerControllerTest {
     @Before
     public void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        when(userService.changePassword(any(), any())).thenReturn(dummyPlayer());
-        when(userService.createUser(any(), any())).thenReturn(dummyPlayer());
     }
 
     @Test
-    @WithMockUser
+    public void shouldReturnCurrentUser() throws Exception {
+        when(userService.getCurrentUser()).thenReturn(dummyPlayer());
+        mockMvc.perform(get("/players/current")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.login").value(LOGIN))
+                .andExpect(jsonPath("$.roles").isArray())
+                .andExpect(jsonPath("$.roles").value(hasItems(User.PLAYER_ROLE)))
+                .andExpect(jsonPath("$.passwordHash").doesNotExist());
+    }
+
+    @Test
     public void shouldReturnUserWhenChangingPassword() throws Exception {
+        when(userService.changePassword(any(), any())).thenReturn(dummyPlayer());
         Gson gson = new Gson();
         UserPasswordChangeRequest request = UserPasswordChangeRequest.builder()
                 .newPassword(NEW_PASSWORD)
@@ -85,7 +90,6 @@ public class PlayerControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void shouldReturnExceptionWhenChangedPasswordTooShort() throws Exception {
         Gson gson = new Gson();
         UserPasswordChangeRequest request = UserPasswordChangeRequest.builder()
@@ -105,7 +109,6 @@ public class PlayerControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void shouldReturnExceptionWhenChangedPasswordIsNull() throws Exception {
         Gson gson = new Gson();
         UserPasswordChangeRequest request = UserPasswordChangeRequest.builder()
@@ -145,6 +148,7 @@ public class PlayerControllerTest {
 
     @Test
     public void shouldReturnUserWhenCreatingNewOne() throws Exception {
+        when(userService.createUser(any(), any())).thenReturn(dummyPlayer());
         Gson gson = new Gson();
         UserCreateRequest request = UserCreateRequest.builder()
                 .login(LOGIN)
