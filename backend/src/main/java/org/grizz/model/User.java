@@ -1,5 +1,6 @@
 package org.grizz.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Builder;
 import lombok.Data;
@@ -18,15 +19,13 @@ public class User {
     public static final transient String ADMIN_ROLE = "ADMIN";
 
     @Id
-    @JsonView(View.Summary.class)
     private String id;
 
-    @JsonView(View.Summary.class)
     @Indexed(unique = true)
     private String login;
 
-    @JsonView(View.Summary.class)
     private Set<String> roles;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String passwordHash;
 }

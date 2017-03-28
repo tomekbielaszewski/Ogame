@@ -30,20 +30,17 @@ public class PlayerController {
     @Autowired
     private UserService userService;
 
-    @JsonView(View.Summary.class)
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/current", method = GET)
     public User currentUser() {
         return userService.getCurrentUser();
     }
 
-    @JsonView(View.Summary.class)
     @RequestMapping(method = POST)
     public User createUser(@Valid @RequestBody UserCreateRequest user) {
         return userService.createUser(user.getLogin(), user.getPassword());
     }
 
-    @JsonView(View.Summary.class)
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public User changePassword(@Valid @RequestBody UserPasswordChangeRequest user) {
