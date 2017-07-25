@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import org.grizz.exception.PlanetNotFoundException;
 import org.grizz.model.Building;
 import org.grizz.model.Planet;
-import org.grizz.model.User;
+import org.grizz.model.Player;
 import org.grizz.model.enummerations.BuildingType;
 import org.grizz.model.repos.PlanetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +16,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class PlanetService {
-
     @Autowired
     private PlanetRepository planetRepository;
 
     @Autowired
-    private UserService userService;
+    private PlayerService playerService;
 
     public Planet get(String id) {
-        Planet planet = planetRepository.findById(id);
-        if(planet == null) {
-            throw new PlanetNotFoundException(id);
-        }
-        return planet;
+        return planetRepository.findById(id)
+            .orElseThrow(() -> new PlanetNotFoundException(id));
     }
 
-    public Planet create(User owner) {
+    public Planet create(Player owner) {
         Planet planet = Planet.builder()
                 .buildings(createDefaultBuildings())
                 .owner(owner.getLogin())
@@ -52,7 +48,7 @@ public class PlanetService {
     }
 
     public List<Planet> getCurrentUserPlanets() {
-        String owner = userService.getCurrentUserLogin();
+        String owner = playerService.getCurrentPlayerLogin();
         return planetRepository.findByOwner(owner);
     }
 }

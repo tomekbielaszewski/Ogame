@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.grizz.exception.PlanetNotFoundException;
 import org.grizz.model.Planet;
-import org.grizz.model.User;
+import org.grizz.model.Player;
 import org.grizz.model.enummerations.BuildingType;
 import org.grizz.model.repos.PlanetRepository;
 import org.junit.Test;
@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -32,14 +33,14 @@ public class PlanetServiceTest {
     private PlanetRepository planetRepository;
 
     @Mock
-    private UserService userService;
+    private PlayerService playerService;
 
     @InjectMocks
     private PlanetService planetService;
 
     @Test
     public void shouldReturnPlanetWhenGettingById() {
-        when(planetRepository.findById(ID)).thenReturn(dummyPlanet());
+        when(planetRepository.findById(ID)).thenReturn(Optional.of(dummyPlanet()));
 
         planetService.get(ID);
 
@@ -48,7 +49,7 @@ public class PlanetServiceTest {
 
     @Test
     public void shouldNewlyCreatedPlanetHaveOwner() {
-        User owner = User.builder().login(OWNER).build();
+        Player owner = Player.builder().login(OWNER).build();
         when(planetRepository.save(any(Planet.class))).then(returnsFirstArg());
 
         Planet newPlanet = planetService.create(owner);
@@ -59,7 +60,7 @@ public class PlanetServiceTest {
 
     @Test
     public void shouldNewlyCreatedPlanetHaveDefaultBuildings() {
-        User owner = User.builder().build();
+        Player owner = Player.builder().build();
         when(planetRepository.save(any(Planet.class))).then(returnsFirstArg());
 
         Planet newPlanet = planetService.create(owner);
@@ -70,7 +71,7 @@ public class PlanetServiceTest {
 
     @Test
     public void shouldReturnPlanetsBelongingToUser() {
-        when(userService.getCurrentUserLogin()).thenReturn(OWNER);
+        when(playerService.getCurrentPlayerLogin()).thenReturn(OWNER);
         when(planetRepository.findByOwner(OWNER)).thenReturn(Lists.newArrayList(dummyPlanet()));
 
         List<Planet> planets = planetService.getCurrentUserPlanets();
@@ -82,7 +83,7 @@ public class PlanetServiceTest {
 
     @Test(expected = PlanetNotFoundException.class)
     public void shouldThrowExceptionWhenPlanetNotFound() {
-        when(planetRepository.findById(ID)).thenReturn(null);
+        when(planetRepository.findById(ID)).thenReturn(Optional.empty());
         planetService.get(ID);
     }
 
