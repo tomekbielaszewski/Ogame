@@ -7,4 +7,4 @@ branches:
   only:
     - master
     
-before-script: cd backend
+before_script: cd backend
